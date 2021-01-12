@@ -76,6 +76,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'novvsworld.wsgi.application'
 
 
@@ -129,7 +131,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'nw_site/uploads').replace('\\', '/')
+MEDIA_ROOT = "/Users/eomolo/projects/novvsworld/uploads"
+MEDIA_URL = '/uploads/'
+
 STATIC_URL = '/static/'
+
+STATIC_ROOT = "/Users/eomolo/projects/novvsworld"
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, './nw_site/static/'),
 )

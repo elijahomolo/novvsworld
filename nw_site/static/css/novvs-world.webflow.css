@@ -622,6 +622,46 @@ p {
     "Area-4 Area-3";
 }
 
+.html-embed {
+  display: block;
+}
+
+.image {
+  position: static;
+}
+
+.div-block-2 {
+  padding-left: 0px;
+}
+
+.rich-text-block {
+  display: block;
+  opacity: 1;
+  -webkit-filter: blur(0px);
+  filter: blur(0px);
+}
+
+.rich-text-block-2 {
+  padding-top: 0px;
+  padding-left: 20px;
+  box-shadow: 1px 1px 20px 0 #030303;
+  opacity: 0.82;
+}
+
+#postTitle {
+  text-align: center;
+}
+
+.container {
+  margin-top: 180px;
+  margin-bottom: 48px;
+}
+
+.image-2 {
+  box-shadow: 2px 0 20px 0 #000;
+  opacity: 0.62;
+}
+
 @media screen and (max-width: 991px) {
   .nav-menu {
     padding-top: 18px;
@@ -829,5 +869,3 @@ p {
   -ms-grid-row: 2;
   -ms-grid-column: 2;
 }
-
-

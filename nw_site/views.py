@@ -15,6 +15,9 @@ def index(request):
 def music(request):
     return render(request, 'music.html')
 
+def vault(request):
+    return render(request, 'vault.html')
+
 def post(request, post_id):
     return HttpResponse("You're looking at post %s." % post_id)
 

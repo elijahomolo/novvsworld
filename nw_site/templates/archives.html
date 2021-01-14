@@ -5,28 +5,28 @@
 
 
     <div class="container w-container">
-      {% if latest_post_list %}
-      {% for post in latest_post_list %}
+      {% if latest_archives_list %}
+      {% for archives in latest_archives_list %}
       <div class="div-block-2"></div>
       <div>
         <div class="columns w-row">
           <div class="w-col w-col-7">
             <div class="rich-text-block-2 w-richtext">
-              <h2 id="postTitle">{{ post.title }}</h2>
-              <p>{{ post.body }}</p>
+              <h2 id="postTitle">{{ archives.title }}</h2>
+              <p>{{ archives.body }}</p>
             </div>
           </div>
           <div class="w-col w-col-5">
-            <div><img src="uploads/{{ post.image_upload }}" loading="lazy" srcset="uploads/{{ post.image_upload }}" id="post-image"  alt="" class="image-2"></div>
+            <div><img src="uploads/{{ archives.image_upload }}" loading="lazy" srcset="uploads/{{ archives.image_upload }}" id="post-image"  alt="" class="image-2"></div>
             <div>
-              <a href="{{ post.link_to }}" class="button-2 w-button">Check it out </a>
+              <a href="{{ archives.link_to }}" class="button-2 w-button">Check it out </a>
             </div>
           </div>
         </div>
       </div>
       {% endfor %}
       {% else %}
-          <p>No post are available.</p>
+          <p>No archives are available.</p>
       {% endif %}
     </div>
 

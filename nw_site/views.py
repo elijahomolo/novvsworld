@@ -4,6 +4,7 @@ from django.template import loader
 from django.http import HttpResponse
 
 from .models import Post
+from .models import Archives
 
 # Create your views here.
 
@@ -18,8 +19,18 @@ def music(request):
 def vault(request):
     return render(request, 'vault.html')
 
+def archives(request):
+    latest_archives_list = Archives.objects.order_by('-pub_date')
+    context = {'latest_archives_list': latest_archives_list}
+    return render(request, 'archives.html', context)
+
 def post(request, post_id):
     return HttpResponse("You're looking at post %s." % post_id)
+
+def archive_post(request, archives_id):
+    return HttpResponse("You're looking at archives %s." % archives_id)
+
+
 
 def releases(request):
     #template = loader.get_template('ex_mwingine.html')

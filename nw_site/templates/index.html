@@ -9,7 +9,7 @@
       {% for post in latest_post_list %}
       <div class="div-block-2"></div>
       <div>
-        <div class="w-row">
+        <div class="columns w-row">
           <div class="w-col w-col-7">
             <div class="rich-text-block-2 w-richtext">
               <h2 id="postTitle">{{ post.title }}</h2>
@@ -17,9 +17,9 @@
             </div>
           </div>
           <div class="w-col w-col-5">
-            <div><img src="{{ post.image_upload }}" loading="lazy" srcset="{{ post.image_upload }}" id="post-image" sizes="(max-width: 380px) 96vw, (max-width: 380px) 291.65625px, 380px" alt="" class="image-2"></div>
+            <div><img src="{{ post.image_upload }}" loading="lazy" srcset="{{ post.image_upload }}" id="post-image"  alt="" class="image-2"></div>
             <div>
-              <a href="music.html" class="w-inline-block"></a>
+              <a href="#" class="button-2 w-button">Check it out </a>
             </div>
           </div>
         </div>

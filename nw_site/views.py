@@ -24,6 +24,9 @@ def archives(request):
     context = {'latest_archives_list': latest_archives_list}
     return render(request, 'archives.html', context)
 
+def contact(request):
+    return render(request, 'contact.html')
+
 def post(request, post_id):
     return HttpResponse("You're looking at post %s." % post_id)
 

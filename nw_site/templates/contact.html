@@ -1,8 +1,31 @@
 {% include "_partial.html" %}
-
+{% load static %}
 
 {% block content %}
 
-
+<div class="section">
+  <div class="content-wrapper w-container">
+    <h1 class="page-title">Get in touch</h1>
+    <div class="contact-row w-row">
+      <div class="w-col w-col-6">
+        <a href="https://twitter.com/ayenovv" target="_blank" class="w-inline-block"><img src="{% static 'images/iconfinder_1_Twitter3_colored_svg_5296516.svg' %}" loading="lazy" width="75" alt=""></a>
+      </div>
+      <div class="w-col w-col-6">
+        <a href="https://www.facebook.com/ayenovv" target="_blank" class="w-inline-block"><img src="{% static 'images/iconfinder_Colored_Facebook3_svg_5365678.svg' %}" loading="lazy" width="75" alt=""></a>
+      </div>
+    </div>
+    <div class="contact-row w-row">
+      <div class="w-col w-col-6">
+        <a href="https://soundcloud.com/ayenovv" target="_blank" class="w-inline-block"><img src="{% static 'images/iconfinder_SoundCloud_2062090.svg' %}" loading="lazy" width="75" alt=""></a>
+      </div>
+      <div class="w-col w-col-6">
+        <a href="https://www.instagram.com/ayenovv/" target="_blank" class="w-inline-block"><img src="{% static 'images/iconfinder_1_Instagram_colored_svg_1_5296765.svg' %}" loading="lazy" width="75" alt=""></a>
+      </div>
+    </div>
+  </div>
+  <div class="content w-container">
+    <div class="text-block-2">EMAIL: contact@novvs.world</div>
+  </div>
+</div>
 
 {% endblock %}

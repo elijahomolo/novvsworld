@@ -1,0 +1,17 @@
+{% include "_partial.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="flex-container w-container">
+    <div class="feature-image-mask">
+      <div class="w-embed w-iframe"><iframe width="560" height="315" src="https://www.youtube.com/embed/g9OAa4wtQR4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+    </div>
+    <div>
+      <h2>{{ archives_post.title }}</h2>
+      <p>{{ archives_post.body }}</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

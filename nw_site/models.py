@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Post(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, default="A new post")
     description = models.CharField(max_length=100, default=title)
     body = models.TextField()
     image_upload = models.ImageField()
@@ -13,7 +13,7 @@ class Post(models.Model):
         return self.body
 
 class Archives(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, default="A new archive")
     description = models.CharField(max_length=100, default=title)
     body = models.TextField()
     image_upload = models.ImageField()

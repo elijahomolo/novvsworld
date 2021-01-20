@@ -1,3 +1,4 @@
+
 .w-embed-youtubevideo {
   width: 100%;
   position: relative;
@@ -31,6 +32,8 @@ body {
   color: #fff;
   font-size: 14px;
   line-height: 20px;
+  width: auto!important;
+  overflow-x: hidden!important
 }
 
 h1 {
@@ -122,8 +125,9 @@ p {
   background-position: 0px 0px, 50% 50%;
   background-size: auto, cover;
   background-repeat: repeat, repeat;
-  background-attachment: scroll, scroll;
-}
+  background-attachment: fixed;
+}http://127.0.0.1:8000/
+
 
 .hero-content {
   position: absolute;
@@ -193,35 +197,6 @@ p {
   color: #fff;
 }
 
-.footer {
-  padding-top: 43px;
-  padding-bottom: 43px;
-  background-color: transparent;
-  color: #222;
-  text-align: center;
-}
-
-.footer.homepage {
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-}
-
-.footer-link {
-  margin-right: 6px;
-  margin-left: 6px;
-  opacity: 0.82;
-  -webkit-transition: opacity 200ms ease;
-  transition: opacity 200ms ease;
-  color: #222;
-  text-decoration: none;
-}
-
-.footer-link:hover {
-  opacity: 0.76;
-  color: #fff;
-}
 
 .social-link {
   width: 25px;
@@ -304,27 +279,7 @@ p {
   text-transform: uppercase;
 }
 
-.small-grey-text.album {
-  color: #efe866;
-  font-size: 15px;
-}
 
-.tour-title {
-  margin-bottom: 100px;
-  text-align: center;
-}
-
-.rsvp-button {
-  padding: 5px 15px;
-  border: 1px solid #f7e769;
-  background-color: transparent;
-  -webkit-transition: color 200ms ease, border-color 200ms ease;
-  transition: color 200ms ease, border-color 200ms ease;
-  color: #f7e769;
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: 1px;
-}
 
 .rsvp-button:hover {
   border-color: #fff;
@@ -651,15 +606,13 @@ p {
 
 
 .container {
-  margin-top: 180px;
-  margin-bottom: 48px;
+  padding-top: 30px;
+  margin-bottom: 12px;
 }
 
 .image-2 {
   max-height: 380px;
-  height: 380px;
-  max-width: 380px;
-  width: 253.33px;
+  max-width: 253.33px;
   opacity: 0.62;
 }
 
@@ -912,7 +865,7 @@ hr.rounded {
 }
 
 .text-block-2 {
-  font-size: 80px;
+  font-size: 4vw;
   line-height: 100px;
   font-weight: 500;
   text-align: center;
@@ -948,4 +901,9 @@ hr.rounded {
 .feature-image-mask {
   width: 100%;
   margin-right: 40px;
+}
+
+.w-col{
+  padding-top: 20px;
+
 }

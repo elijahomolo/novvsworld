@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'nw_site.apps.NwSiteConfig',
+    'django_render_partial',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

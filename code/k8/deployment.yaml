@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novvsworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: novvsworld
+  template:
+    metadata:
+      labels:
+        app: novvsworld
+    spec:
+      containers:
+        - name: novvsworld
+          image: registry.digitalocean.com/eo-test-docr/novvsworld
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3000

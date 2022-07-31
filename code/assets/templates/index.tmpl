@@ -3,13 +3,105 @@
 <html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
     <style>
-    body {
-      background-image: url('https://novvsworld.s3.amazonaws.com/images/COMING_SOON.png');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
-    }
+        body {
+          background-image: url('https://novvsworld.s3.amazonaws.com/images/Instrumental+cover_final.png');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        .div-1 {
+            height: 2000px;
+            margin: 200px;
+            border: 5px solid;
+        }
+        .div-2 {
+            background-image: url('https://novvsworld.s3.amazonaws.com/images/COMING_SOON.png');            height: 500px;
+            background-repeat: no-repeat;
+                    background-repeat: no-repeat;
+                        opacity: 0.9;
+                        filter: alpha(opacity=40); /* For IE8 and earlier */
+                    background-size: 100% 100%;
+            background-size: 100% 100%;
+            margin: 20px;
+            border: 5px solid;
+        }
+
+        .div-3 {
+            height: 1300px;
+            margin: 20px;
+            border: 5px solid;
+        }
+
+        .div-4 {
+            height: 500px;
+            margin: 20px;
+            border: 5px solid;
+
+        }
+
+        .column {
+          float: left;
+          width: 33.33%;
+          height: 100%;
+        }
+        .rules-row {
+          height: 25%;
+          background-image: url('https://novvsworld.s3.amazonaws.com/images/rules.png');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          opacity: 0.9;
+          filter: alpha(opacity=40); /* For IE8 and earlier */
+        }
+        .download-row {
+          height: 25%;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          background-color: black;
+        }
+        .winner-row {
+          height: 50%;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          background-color: black;
+        }
+        .socials-row {
+          height: 50%;
+          background-image: url('https://novvsworld.s3.amazonaws.com/images/rules.png');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          opacity: 0.9;
+          filter: alpha(opacity=40); /* For IE8 and earlier */
+        }
+        .container {
+          float: left;
+          width: 100%;
+          height: 100%;
+        }
+        .grid-container {
+          display: inline-grid;
+              gap: 50px;
+        }
+        .item1 {
+          grid-column-start: 1;
+          grid-column-end: 4;
+          grid-row-start: 1;
+          grid-row-end: 4;
+
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+          content: "";
+          margin: 20px;
+          height: 100%;
+          display: table;
+          clear: both;
+          background-color: black;
     </style>
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1' name='viewport'/>
@@ -18,10 +110,71 @@
 </head>
 
 <body class="min-vh-100 d-flex flex-column" >
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 
     <main class="my-auto" >
-        <div class="container">
 
+        <div class="div-1">
+
+            <div class="div-2">
+            </div>
+
+                <div class="div-3">
+
+                    <div class="div-4">
+                         <div style="width: 50%; height: 100%; float: left; ">
+                             <iframe width=100% height=100% src="https://www.youtube.com/embed/8nnTPtTJ4r4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                         </div>
+                         <div style="margin-left: 50%; height: 100%; background: blue;">
+                             <iframe width="100%" height="100%" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1305536344&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/user-283089571" title="SpectraEntertainmentGroup" target="_blank" style="color: #cccccc; text-decoration: none;"></a> · <a href="https://soundcloud.com/user-283089571/just-that-type" title="Novv - Just.That.Type" target="_blank" style="color: #cccccc; text-decoration: none;"></a></div>
+                         </div>
+                    </div>
+
+
+                    <div class="div-4">
+                          <div class="column" style="height: 100%; background: yellow;">
+                               <div class="rules-row">
+                               </div>
+
+                               <div class="download-row">
+                                 <a href="default.asp"><img src="https://novvsworld.s3.amazonaws.com/images/Download+the+beat.png" alt="HTML tutorial" style="width:70%;height:70%;"></a>
+                               </div>
+
+                               <div class="winner-row">
+                                 <a href="default.asp"><img src="https://novvsworld.s3.amazonaws.com/images/winner.png" alt="HTML tutorial" style="width:100%;height:100%;"></a>
+                                </div>
+                          </div>
+
+                          <div class="column" style="height: 100%; background: purple;">
+                            <iframe width="100%" height="100%" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1314768271&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/user-283089571" title="SpectraEntertainmentGroup" target="_blank" style="color: #cccccc; text-decoration: none;"></a> · <a href="https://soundcloud.com/user-283089571/justthattype-instrumental-version-prod-by-novv" title="Just.That.Type - Instrumental Version (Prod By Novv)" target="_blank" style="color: #cccccc; text-decoration: none;"></a></div>
+                          </div>
+
+                          <div class="column">
+                                  <div class="container text-center">
+                                    <div class="row" style="height: 50%;">
+                                      <div class="col">
+                                                                         <a href="default.asp"><img src="https://novvsworld.s3.amazonaws.com/images/Download+the+beat.png" alt="HTML tutorial" style="width:70%;height:70%;"></a>
+
+                                      </div>
+                                      <div class="col">
+                                                                         <a href="default.asp"><img src="https://novvsworld.s3.amazonaws.com/images/Download+the+beat.png" alt="HTML tutorial" style="width:70%;height:70%;"></a>
+
+                                      </div>
+                                    </div>
+                                    <div class="row" style="height: 50%;">
+                                      <div class="col">
+                                                                         <a href="default.asp"><img src="https://novvsworld.s3.amazonaws.com/images/Download+the+beat.png" alt="HTML tutorial" style="width:70%;height:70%;"></a>
+
+                                      </div>
+                                      <div class="col">
+                                                                         <a href="default.asp"><img src="https://novvsworld.s3.amazonaws.com/images/Download+the+beat.png" alt="HTML tutorial" style="width:70%;height:70%;"></a>
+
+                                      </div>
+                                    </div>
+                                  </div>
+                          </div>
+                    </div>
+                </div>
         </div>
     </main>
 </body>

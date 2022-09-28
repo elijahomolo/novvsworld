@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1, minimum-scale=0.1' name='viewport'/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/stylesheets/main.css">
+
+    <style>
+.w-layout-grid {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  -ms-grid-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  -ms-grid-rows: auto auto;
+  grid-template-rows: auto auto;
+  grid-row-gap: 16px;
+  grid-column-gap: 16px;
+}
+
+.hero-heading-center {
+  position: relative;
+  padding: 80px 30px;
+  border-bottom: 1px solid #e4ebf3;
+  background-color: #f5f7fa;
+}
+
+.container {
+  width: 100%;
+  max-width: 940px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.centered-heading {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.centered-heading.margin-bottom-32px {
+  margin-bottom: 32px;
+}
+
+.hero-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.hero-split {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 46%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.margin-bottom-24px {
+  margin-bottom: 24px;
+}
+
+.button-primary {
+  padding: 12px 25px;
+  background-color: #1a1b1f;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+  color: #fff;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.button-primary:hover {
+  background-color: #32343a;
+  color: #fff;
+}
+
+.button-primary:active {
+  background-color: #43464d;
+}
+
+.shadow-two {
+  box-shadow: 0 4px 24px 0 rgba(150, 163, 181, 0.08);
+}
+
+.background {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+    .body {
+    background-image: url('https://novvsworld.s3.amazonaws.com/images/Screen+Grab+4_2.16.1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    }
+
+.hero-without-image {
+  position: relative;
+  height: 600px;
+  min-height: 100%;
+  min-width: 100%;
+  padding: 80px 30px;
+  border-bottom: 1px solid #e4ebf3;
+  background-color: #f5f7fa;
+  background-image: url('https://novvsworld.s3.amazonaws.com/images/banner.png');
+  background-position: 50% 50%;
+  background-size: 100% 100%;
+  background-repeat: repeat;
+}
+
+.hero-wrapper-two {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 750px;
+  margin-right: auto;
+  margin-left: auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+
+.container {
+  max-height: 100%;
+  max-width: 100%;
+  margin-top: 35px;
+}
+
+.section {
+  background-color: transparent;
+}
+
+.html-embed {
+  position: static;
+  left: 0%;
+  top: 0%;
+  right: 0%;
+  bottom: 0%;
+  display: block;
+  overflow: visible;
+  width: 100%;
+  height: 300px;
+  max-height: 300px;
+  float: none;
+  clear: none;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -o-object-fit: fill;
+  object-fit: fill;
+}
+
+.html-embed-2 {
+  display: block;
+  width: auto;
+  height: 300px;
+  max-height: 300px;
+  min-height: auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.image {
+  height: 50%;
+  padding-bottom: 0px;
+}
+
+.image-2 {
+  height: 300px;
+}
+
+.image-3 {
+  width: 100%;
+  height: 100%;
+}
+
+.image-4 {
+  width: 100%;
+  height: 100%;
+}
+
+.image-5 {
+  width: 100%;
+  height: 100%;
+}
+
+.image-6 {
+  height: 100%;
+}
+
+.image-7 {
+  width: 100%;
+  height: 100.000044%;
+}
+
+.grid {
+  margin-top: 35px;
+}
+
+.html-embed-3 {
+  width: 100%;
+  height: 600px;
+}
+
+@media screen and (max-width: 991px) {
+  .container {
+    max-width: 728px;
+  }
+
+  .hero-wrapper {
+    margin-bottom: -40px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+
+  .hero-split {
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+
+    .body {
+    background-image: url('https://novvsworld.s3.amazonaws.com/images/Screen+Grab+4_2.16.1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    }
+
+  .hero-without-image {
+    height: 350px;
+  }
+
+  .image-5 {
+    width: 100%;
+  }
+
+  .image-6 {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .hero-heading-center {
+    padding: 60px 15px;
+  }
+
+    .body {
+    background-image: url('https://novvsworld.s3.amazonaws.com/images/Screen+Grab+4_2.16.1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    }
+
+  .hero-without-image {
+    height: 350px;
+    padding: 60px 15px;
+  }
+
+  .container {
+    margin-top: 35px;
+  }
+
+  .section {
+    background-color: transparent;
+  }
+
+  .html-embed {
+    margin-top: 14px;
+  }
+
+  .image-2 {
+    height: 150px;
+    max-height: 200px;
+    min-height: 100px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .container {
+    max-width: none;
+  }
+
+  .centered-heading {
+    margin-bottom: 24px;
+  }
+
+    .body {
+    background-image: url('https://novvsworld.s3.amazonaws.com/images/Screen+Grab+4_2.16.1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    }
+
+  .hero-without-image {
+    height: 350px;
+  }
+
+  .html-embed {
+    width: auto;
+    min-width: 100%;
+  }
+
+  .html-embed-2 {
+    width: auto;
+  }
+
+  .image {
+    max-height: 100px;
+  }
+
+  .image-2 {
+    height: 150px;
+    max-height: 200px;
+  }
+}
+
+#w-node-c67247ed-fa6e-bc4e-08dc-e943a86716e6-df462d4c {
+  -ms-grid-column: span 1;
+  grid-column-start: span 1;
+  -ms-grid-column-span: 1;
+  grid-column-end: span 1;
+  -ms-grid-row: span 1;
+  grid-row-start: span 1;
+  -ms-grid-row-span: 1;
+  grid-row-end: span 1;
+}
+
+#w-node-_57a51628-a103-87bb-3641-ae74f2355ba8-df462d4c {
+  -ms-grid-column: span 1;
+  grid-column-start: span 1;
+  -ms-grid-column-span: 1;
+  grid-column-end: span 1;
+  -ms-grid-row: span 1;
+  grid-row-start: span 1;
+  -ms-grid-row-span: 1;
+  grid-row-end: span 1;
+}
+
+#w-node-_9b9fcac3-3830-4df1-3048-997cc2b38399-df462d4c {
+  -ms-grid-column: span 1;
+  grid-column-start: span 1;
+  -ms-grid-column-span: 1;
+  grid-column-end: span 1;
+  -ms-grid-row: span 1;
+  grid-row-start: span 1;
+  -ms-grid-row-span: 1;
+  grid-row-end: span 1;
+}
+
+#w-node-c67247ed-fa6e-bc4e-08dc-e943a86716e6-d20ac46a {
+  -ms-grid-column: span 1;
+  grid-column-start: span 1;
+  -ms-grid-column-span: 1;
+  grid-column-end: span 1;
+  -ms-grid-row: span 1;
+  grid-row-start: span 1;
+  -ms-grid-row-span: 1;
+  grid-row-end: span 1;
+}
+
+#w-node-_57a51628-a103-87bb-3641-ae74f2355ba8-d20ac46a {
+  -ms-grid-column: span 1;
+  grid-column-start: span 1;
+  -ms-grid-column-span: 1;
+  grid-column-end: span 1;
+  -ms-grid-row: span 1;
+  grid-row-start: span 1;
+  -ms-grid-row-span: 1;
+  grid-row-end: span 1;
+}
+
+#w-node-_9b9fcac3-3830-4df1-3048-997cc2b38399-d20ac46a {
+  -ms-grid-column: span 1;
+  grid-column-start: span 1;
+  -ms-grid-column-span: 1;
+  grid-column-end: span 1;
+  -ms-grid-row: span 1;
+  grid-row-start: span 1;
+  -ms-grid-row-span: 1;
+  grid-row-end: span 1;
+}
+
+@media screen and (max-width: 991px) {
+  #w-node-_165c7927-53da-c4fc-d594-ac86780fcdec-df462d4c {
+    -ms-grid-column: span 1;
+    grid-column-start: span 1;
+    -ms-grid-column-span: 1;
+    grid-column-end: span 1;
+    -ms-grid-row: span 1;
+    grid-row-start: span 1;
+    -ms-grid-row-span: 1;
+    grid-row-end: span 1;
+  }
+
+  #w-node-_165c7927-53da-c4fc-d594-ac86780fcdec-d20ac46a {
+    -ms-grid-column: span 1;
+    grid-column-start: span 1;
+    -ms-grid-column-span: 1;
+    grid-column-end: span 1;
+    -ms-grid-row: span 1;
+    grid-row-start: span 1;
+    -ms-grid-row-span: 1;
+    grid-row-end: span 1;
+  }
+
+  p {
+  font-size: 20px;
+  color: white;
+  }
+}
+
+
+    </style>
+    <title>Novv's World</title>
+
+    </head>
+
+<body class="body">
+  <section class="hero-without-image wf-section"></section>
+  <div class="container-fluid w-container">
+    <div class="html-embed-3 w-embed w-iframe"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/8nnTPtTJ4r4?autoplay=1&mute=1&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay=" 0";="" clipboard-write;="" encrypted-media;="" gyroscope;="" picture-in-picture"="" allowfullscreen=""></iframe></div>
+  </div>
+  <div class="container">
+  <div class="mb-3">
+                            <h2 class="email-heading">Sign Up</h2>
+                            <form method="POST" action="insert">
+
+                                <label class="form-label" id="text-sizing">Email</label>
+                                <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                                <label class="form-label" id="text-sizing">Social network</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Instagram">
+                                <label class="form-label" id="text-sizing">Social handle</label>
+                                <input type="text" name="social_handle" class="form-control" id="exampleFormControlInput1" placeholder="ayenovv">
+
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                  <label class="form-check-label" for="flexCheckChecked">
+                                     <p id="text-sizing">Opt in to receive contest and other updates from Novv</p>
+                                  </label>
+                                </div>
+                                <input type="submit" class="btn btn-outline-primary" value="Save" />
+                            </form>
+                        </div>
+  </div>
+  <div class="w-container">
+    <div class="w-layout-grid grid"><img src="images/instagram.png" loading="lazy" id="w-node-c67247ed-fa6e-bc4e-08dc-e943a86716e6-d20ac46a" srcset="images/instagram-p-500.png 500w, images/instagram-p-800.png 800w, images/instagram-p-1080.png 1080w, images/instagram-p-1600.png 1600w, images/instagram-p-2000.png 2000w, images/instagram-p-2600.png 2600w, images/instagram-p-3200.png 3200w" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px" alt="" class="image-3"><img src="images/twitter.png" loading="lazy" id="w-node-_165c7927-53da-c4fc-d594-ac86780fcdec-d20ac46a" srcset="images/twitter-p-500.png 500w, images/twitter-p-800.png 800w, images/twitter-p-1080.png 1080w, images/twitter-p-1600.png 1600w, images/twitter-p-2000.png 2000w, images/twitter-p-2600.png 2600w, images/twitter-p-3200.png 3200w" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 300px" alt="" class="image-6"><img src="images/youtube.png" loading="lazy" id="w-node-_57a51628-a103-87bb-3641-ae74f2355ba8-d20ac46a" srcset="images/youtube-p-500.png 500w, images/youtube-p-800.png 800w, images/youtube-p-1080.png 1080w, images/youtube-p-1600.png 1600w, images/youtube-p-2000.png 2000w, images/youtube-p-2600.png 2600w, images/youtube-p-3200.png 3200w" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px" alt="" class="image-4"><img src="images/facebook.png" loading="lazy" id="w-node-_9b9fcac3-3830-4df1-3048-997cc2b38399-d20ac46a" srcset="images/facebook-p-500.png 500w, images/facebook-p-800.png 800w, images/facebook-p-1080.png 1080w, images/facebook-p-1600.png 1600w, images/facebook-p-2000.png 2000w, images/facebook-p-2600.png 2600w, images/facebook-p-3200.png 3200w" sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px" alt="" class="image-5"></div>
+  </div>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=62f94e032a4c4eeb4d462d4b" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+</body>
+</html>

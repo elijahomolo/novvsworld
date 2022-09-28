@@ -16,12 +16,54 @@ spec:
       containers:
         - name: novvsworld
           image: registry.digitalocean.com/eo-registry/novvsworld:latest
+          volumeMounts:
+          - name: db-cert
+            mountPath: "etc/certs"
+            readOnly: true
           resources:
             limits:
               memory: "128Mi"
               cpu: "500m"
           ports:
             - containerPort: 3000
+          env:
+            - name: DBHOST
+              valueFrom:
+                secretKeyRef:
+                  name: novvworld-secrets
+                  key: DBHOST
+            - name: DBPORT
+              value: "25060"
+            - name: DBUSER
+              valueFrom:
+                secretKeyRef:
+                  name: novvworld-secrets
+                  key: DBUSER
+            - name: DBPASS
+              valueFrom:
+                secretKeyRef:
+                  name: novvworld-secrets
+                  key: DBPASS
+            - name: DBSSLMODE
+              valueFrom:
+                secretKeyRef:
+                  name: novvworld-secrets
+                  key: DBSSLMODE
+            - name: SENDGRID_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: novvworld-secrets
+                  key: SENDGRID_API_KEY
+            - name: CA_CERT
+              valueFrom:
+                secretKeyRef:
+                  name: novvworld-secrets
+                  key: CA_CERT
+      volumes:
+      - name: db-cert
+        secret:
+          secretName: db-ca-cert
+
 ---
 kind: Service
 apiVersion: v1
@@ -39,8 +81,14 @@ kind: Ingress
 metadata:
   name: ingress-novvsworld
   namespace: novvsworld
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
-  ingressClassName: nginx
+  tls:
+    - hosts:
+        - novvs.world
+    - secretName: novvsworld-tls-certs
   rules:
     - host: novvs.world
       http:
@@ -52,40 +100,3 @@ spec:
                 name: novvsworld-service
                 port:
                   number: 3000
----
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: letsencrypt-nginx
-  namespace: novvsworld
-spec:
-  # ACME issuer configuration
-  # `email` - the email address to be associated with the ACME account (make sure it's a valid one)
-  # `server` - the URL used to access the ACME server’s directory endpoint
-  # `privateKeySecretRef` - Kubernetes Secret to store the automatically generated ACME account private key
-  acme:
-    email: eomolo11@gmail.com
-    server: https://acme-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-nginx-private-key
-    solvers:
-      # Use the HTTP-01 challenge provider
-      - http01:
-          ingress:
-            class: nginx
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ingress-echo
-  namespace: novvsworld
-  annotations:
-    cert-manager.io/issuer: letsencrypt-nginx
-spec:
-  tls:
-    - hosts:
-        - novvs.world
-        - www.novvs.world
-      secretName: letsencrypt-nginx
-  rules:
-    - host: novvs.world

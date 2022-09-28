@@ -59,10 +59,10 @@ func index(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "Index", nil)
 }
 
-func contestSignUp(w http.ResponseWriter, r *http.Request) {
-	tmpl.ExecuteTemplate(w, "ContestSignUp", nil)
-}
-
+//func contestSignUp(w http.ResponseWriter, r *http.Request) {
+//	tmpl.ExecuteTemplate(w, "ContestSignUp", nil)
+//}
+//
 
 
 func sendThanks(users_fn string, user_adr string) {
@@ -125,11 +125,11 @@ func CheckError(err error) {
 
 
 func main() {
-	fileServer := http.FileServer(http.Dir("./static"))
-	http.Handle("/assets/", http.StripPrefix("/assets", fileServer))
+	fileServer := http.FileServer(http.Dir("./assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", fileServer))
 	//	http.Handle("/assets/static", http.StripPrefix("/assets/static", http.FileServer(http.Dir("assets/static"))))
 	http.HandleFunc("/", index)
-	http.HandleFunc("/contest-sign-up", contestSignUp)
+	//http.HandleFunc("/contest-sign-up", contestSignUp)
 	http.HandleFunc("/insert", Insert)
 	http.HandleFunc("/thanks", thanks)
 	fmt.Println("server starting on port 3000...")

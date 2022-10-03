@@ -25,6 +25,15 @@ type User struct {
 	Handle string
 }
 
+type Artist struct {
+	Id int
+	FirstName string
+	LastName string
+	Email string
+	TwitterUserName string
+	InstagramUserName string
+	artLink string
+}
 // load .env file
 func goDotEnvVariable(key string) string {
 	err := godotenv.Load(".env")
@@ -46,7 +55,7 @@ func dbConn() (db *sql.DB) {
 	caCert := "sslrootcert = " + goDotEnvVariable("CA_CERT")
 	// create a connection string
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
-		"password=%s dbname=%s sslmode=%s sslrootcert=%s",
+		"password=%s dbname=%s sslmode=%s cacert=%s",
 		 host, port, dbUser, dbPass, dbname, sslmode, caCert)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
@@ -69,9 +78,9 @@ func sendThanks(users_fn string, user_adr string) {
 	from := mail.NewEmail("Novv", "novv@novvs.world") // Change to your verified sender
 	subject := "Welcome to Novvs World"
 	to := mail.NewEmail(users_fn, user_adr) // Change to your recipient
-	plainTextContent := "Hey" + users_fn + "! Thanks for signing up! A download of the instrumental will begin shortly! Let's see what you got and good luck!!"
-	htmlContent := "<strong> Hey " + users_fn + "!! Thanks for signing up! A download of the instrumental will begin shortly! Let's see what you got and good luck!!" + "\n Novv </strong> + " +
-		"\n Click the link below if the download does not begin automatically" + " " + "\n <a href=\"https://novvsworld.s3.amazonaws.com/downloads/Just+That+Type+-+Instrumental+Version.wav\" download>\n"
+	plainTextContent := "Hey" + users_fn + "! Thanks for signing up! I'll be reaching out with an update on your status shortly! Let's see what you got and good luck!!"
+	htmlContent := "<strong> Hey " + users_fn + "!! Thanks for signing up! I'll be reaching out with an update on your status shortly! Let's see what you got and good luck!!" + "\n Novv </strong> + "
+
 	message := mail.NewSingleEmail(from, subject, to, plainTextContent, htmlContent)
 	client := sendgrid.NewSendClient(goDotEnvVariable("SENDGRID_API_KEY"))
 	response, err := client.Send(message)
@@ -95,21 +104,27 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 	db := dbConn()
 	//If it's a post request, assign a variable to the value returned in each field of the New page.
 	if r.Method == "POST" {
+		firstName := r.FormValue("first_name")
+		lastName := r.FormValue("last_name")
 		email := r.FormValue("email")
-		socialNetwork := r.FormValue("social_network")
-		socialHandle := r.FormValue("social_handle")
+		twitterUsername := r.FormValue("twitter_username")
+		instagramUsername := r.FormValue("instagram_username")
+		artLink := r.FormValue("art_link")
 		createdOn := time.Now().UTC()
 
+		log.Println("INSERT: firstName: " + firstName + " | lastName: " + lastName + " | email : " + email + " | created on: " + createdOn.String() + " | twitter_username: " + twitterUsername + " | instagramUsername: " + instagramUsername )
+
+
 		//prepare a query to insert the data into the database
-		insForm, err := db.Prepare(`INSERT INTO public.users(email, social_network, social_handle, created_on) VALUES ($1,$2, $3, $4)`)
+		insForm, err := db.Prepare(`INSERT INTO public.art_contest(first_name, last_name, email, instagram_username, twitter_username, art_link, created_on) VALUES ($1,$2, $3, $4, $5, $6, $7)`)
 		//check for  and handle any errors
 		CheckError(err)
 		//execute the query using the form data
-		_, err = insForm.Exec(email, socialNetwork, socialHandle, createdOn)
+		_, err = insForm.Exec(firstName, lastName, email, instagramUsername, twitterUsername, artLink, createdOn)
 		CheckError(err)
 		//print out added data in terminal
-		log.Println("INSERT: email: " + email + " | social network: " + socialNetwork + " | social handle : " + socialHandle + " | created on: " + createdOn.String() + " | createdOn is type: " + reflect.TypeOf(createdOn).String())
-	//	sendThanks(socialHandle, email)
+		log.Println("INSERT: email: " + email + " | social network: " + instagramUsername + " | social handle : " + twitterUsername + " | created on: " + createdOn.String() + " | createdOn is type: " + reflect.TypeOf(createdOn).String())
+		sendThanks(firstName, email)
 	}
 	defer db.Close()
 
@@ -134,4 +149,7 @@ func main() {
 	http.HandleFunc("/thanks", thanks)
 	fmt.Println("server starting on port 3000...")
 	http.ListenAndServe(":3000", nil)
+
+
 }
+

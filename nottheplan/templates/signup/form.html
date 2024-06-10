@@ -1,17 +1,31 @@
 <!-- forms.html -->
 {{if .Success}}
-<h1>Thanks for your message!</h1>
+<h1>Create Account</h1>
+<p>Account created successfully</p>
 {{else}}
 <h1>Contact</h1>
 <form method="POST">
     <label>Email:</label><br />
-    <input type="text" name="email" required><br />
-    <label>First Name:</label><br />
-    <input type="text" name="first_name" required><br />
-    <label>Last Name:</label><br />
-    <input type="text" name="last_name" required><br />
-    <label>Link to demo:</label><br />
-    <input type="text" name="demo" required><br />
-    <input type="submit">
+    <input type="text" name="email" required><br/>
+    <label>First Name:</label><br/>
+    <input type="text" name="first_name" required><br/>
+    <label>Last Name:</label><br/>
+    <input type="text" name="last_name" required><br/>
+    <!-- <label>Link to demo:</label><br />
+  <input type="text" name="demo" required><br />  -->
+    <label>Username:</label><br/>
+    <input type="text" name="username" required><br/>
+    <label>Password:</label><br />
+    <input type="text" name="password" required><br/>
+    <label>Instagram link:</label><br/>
+    <input type="text" name="instagram"><br/>
+    <label>Twitter:</label><br />
+    <input type="text" name="twitter"><br/>
+    <label>Thread:</label><br />
+    <input type="text" name="threads"><br/>
+    <label>Country:</label><br />
+    <input type="text" name="country" required><br/>
+  <input type="submit">
+
 </form>
 {{end}}

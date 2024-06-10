@@ -1,0 +1,22 @@
+<!-- forms.html -->
+{{if .Success}}
+<h1>Create Commission</h1>
+<p>Commission Created</p>
+{{else}}
+<h1>Contact</h1>
+<form method="POST">
+    <label>Title:</label><br/>
+    <input type="text" name="title" required><br/>
+    <label>Description:</label><br />
+    <input type="text" name="description" required><br/>
+    <label>Budget:</label><br />
+    <input type="text" name="budget" required><br/>
+    <label>Location:</label><br />
+    <input type="text" name="location" required><br/>
+    <label>Deadline:</label><br />
+    <input type="text" name="deadline" required><br/>
+    <label>Award date:</label><br />
+    <input type="text" name="award-date" required><br/>
+    <input type="submit">
+</form>
+{{end}}

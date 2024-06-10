@@ -46,7 +46,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = createSession(w, credentials)
+	err = createSession(w, credentials.Username)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to create session: %v", err), http.StatusInternalServerError)
 		tmpl.Execute(w, nil)
@@ -59,7 +59,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func createSession(w http.ResponseWriter, member Member) error {
+func createSession(w http.ResponseWriter, username string) error {
 	// create a user session
 	// Declare the expiration time of the token
 	// here, we have kept it as 5 minutes
@@ -67,7 +67,7 @@ func createSession(w http.ResponseWriter, member Member) error {
 
 	// Create the JWT claims, which includes the username and expiry time
 	claims := &Claims{
-		Username: member.Username,
+		Username: username,
 		RegisteredClaims: jwt.RegisteredClaims{
 			// In JWT, the expiry time is expressed as unix milliseconds
 			ExpiresAt: jwt.NewNumericDate(expirationTime),

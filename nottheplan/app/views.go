@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -24,9 +25,19 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func CommisionsPage(w http.ResponseWriter, r *http.Request) {
-	err := executeTemplate("templates", "commissions.html", w, nil)
+
+	commission := &Commission{}
+
+	commissions, err := commission.GetAll()
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, fmt.Sprintf("failed to list commissions: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	err = executeTemplate("templates", "commissions.html", w, commissions)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to list commissions: %v", err), http.StatusInternalServerError)
+		return
 	}
 }
 

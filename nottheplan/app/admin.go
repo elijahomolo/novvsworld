@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 )
 
 func AdminLogin(w http.ResponseWriter, r *http.Request) {
@@ -77,15 +78,21 @@ func CreateCommission(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	layout := "02/01/2006 3.04.05 PM MST"
+	value := "14/12/2023 8.08.06 PM EST"
+
+	date, _ := time.Parse(layout, value)
+
 	commission := &Commission{
-		Name:        r.FormValue("name"),
-		Description: r.FormValue("description"),
-		Budget:      r.FormValue("budget"),
-		Currency:    r.FormValue("currency"),
-		Location:    r.FormValue("location"),
-		Deadline:    r.FormValue("deadline"),
-		Status:      r.FormValue("status"),
-		Winner:      r.FormValue("winner"),
+		Name:        "test",
+		Description: "test",
+		Budget:      10000,
+		Currency:    "Ksh",
+		Location:    "Nairobi",
+		Deadline:    date,
+		Status:      "open",
+		Winner:      "Test",
+		Entries:     []uint8{},
 	}
 
 	log.Printf("Commission: %v", commission)
@@ -101,8 +108,24 @@ func CreateCommission(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to execute template: %v", err), http.StatusInternalServerError)
 	}
+}
 
-	//create a commission
+func ListCommissions(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/admin/commissions.html"))
+
+	commission := &Commission{}
+
+	commissions, err := commission.GetAll()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to list commissions: %v", err), http.StatusInternalServerError)
+		tmpl.Execute(w, nil)
+		return
+	}
+
+	err = tmpl.Execute(w, commissions)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to execute template: %v", err), http.StatusInternalServerError)
+	}
 }
 
 func validateSession(w http.ResponseWriter, r *http.Request) {

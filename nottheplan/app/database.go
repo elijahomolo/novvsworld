@@ -2,11 +2,16 @@ package app
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
 )
+
+type DB struct {
+	Database *sql.DB
+}
 
 // load .env file
 func goDotEnvVariable(key string) string {
@@ -17,7 +22,7 @@ func goDotEnvVariable(key string) string {
 	return os.Getenv(key)
 }
 
-func dbConn() (db *sql.DB) {
+func (d *DB) init() error {
 	// pass the db credentials into variables
 	cfg := mysql.Config{
 		User:   goDotEnvVariable("DBUSER"),
@@ -27,9 +32,61 @@ func dbConn() (db *sql.DB) {
 		Net:    "tcp",
 	}
 
+	cfg.ParseTime = true
+
 	db, err := sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
-		panic(err)
+		return err
 	}
-	return db
+	d.Database = db
+	return nil
+}
+
+//func dbConn() (db *sql.DB) {
+//	// pass the db credentials into variables
+//	cfg := mysql.Config{
+//		User:   goDotEnvVariable("DBUSER"),
+//		Passwd: goDotEnvVariable("DBPASS"),
+//		DBName: goDotEnvVariable("DBNAME"),
+//		Addr:   "127.0.0.1:3306",
+//		Net:    "tcp",
+//	}
+//
+//	db, err := sql.Open("mysql", cfg.FormatDSN())
+//	if err != nil {
+//		panic(err)
+//	}
+//	return db
+//}
+
+func (d *DB) close() error {
+	defer func(Database *sql.DB) {
+		err := Database.Close()
+		if err != nil {
+			log.Fatalf("Failed to close database: %v", err)
+		}
+	}(d.Database)
+	return nil
+
+}
+
+func (d *DB) prepare(query string) (*sql.Stmt, error) {
+	stmt, err := d.Database.Prepare(query)
+	log.Printf("preparing statement: %v", stmt)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to prepare statement: %v", err)
+	}
+
+	return stmt, nil
+}
+
+func (d *DB) execute(stmt *sql.Stmt, args ...interface{}) error {
+	result, err := stmt.Exec(args...)
+	if err != nil {
+		return fmt.Errorf("Failed to execute statement: %v", err)
+	}
+
+	log.Print(result)
+
+	return nil
 }

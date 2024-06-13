@@ -13,6 +13,12 @@ type AdminUser struct {
 }
 
 func (a *AdminUser) Create() error {
+	db := DB{}
+	err := db.init()
+	if err != nil {
+		return fmt.Errorf("Failed to initialize database: %v", err)
+	}
+
 	// create a new member
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(a.Password), 8)
 	if err != nil {
@@ -23,9 +29,7 @@ func (a *AdminUser) Create() error {
 
 	sEnc := base64.StdEncoding.EncodeToString([]byte(authToken))
 
-	db := dbConn()
-
-	authForm, err := db.Prepare(`INSERT INTO auth(auth_type, token) VALUES (?, ?)`)
+	authForm, err := db.prepare(`INSERT INTO auth(auth_type, token) VALUES (?, ?)`)
 	if err != nil {
 		return fmt.Errorf("Failed to prepare auth insert statement: %v", err)
 	}
@@ -35,7 +39,7 @@ func (a *AdminUser) Create() error {
 		return fmt.Errorf("Failed to execute auth insert statement: %v", err)
 	}
 
-	selDB, err := db.Query("SELECT id FROM auth WHERE token = ?", sEnc)
+	selDB, err := db.Database.Query("SELECT id FROM auth WHERE token = ?", sEnc)
 	if err != nil {
 		return fmt.Errorf("Failed to query auth table: %v", err)
 	}
@@ -48,7 +52,7 @@ func (a *AdminUser) Create() error {
 		}
 	}
 
-	userForm, err := db.Prepare(`INSERT INTO admin_users(id, username) VALUES (?,?)`)
+	userForm, err := db.prepare(`INSERT INTO admin_users(id, username) VALUES (?,?)`)
 	if err != nil {
 		return fmt.Errorf("Failed to prepare member insert statement: %v", err)
 	}
@@ -62,38 +66,44 @@ func (a *AdminUser) Create() error {
 }
 
 func (a *AdminUser) Verify() error {
-	// check if the credentials are correct
-	db := dbConn()
 
-	selDB, err := db.Query("SELECT id FROM admin_users WHERE username = ?", a.Username)
+	db := DB{}
+	// check if the credentials are correct
+
+	err := db.init()
 	if err != nil {
-		return fmt.Errorf("Failed to query admin_users table: %v", err)
+		return fmt.Errorf("failed to initialize database: %v", err)
+	}
+
+	selDB, err := db.Database.Query("SELECT id FROM admin_users WHERE username = ?", a.Username)
+	if err != nil {
+		return fmt.Errorf("failed to query admin_users table: %v", err)
 	}
 
 	var id int
 	for selDB.Next() {
 		err = selDB.Scan(&id)
 		if err != nil {
-			return fmt.Errorf("Failed to scan members table: %v", err)
+			return fmt.Errorf("failed to scan members table: %v", err)
 		}
 	}
 
-	selDB, err = db.Query("SELECT token FROM auth WHERE id = ?", id)
+	selDB, err = db.Database.Query("SELECT token FROM auth WHERE id = ?", id)
 	if err != nil {
-		return fmt.Errorf("Failed to query auth table: %v", err)
+		return fmt.Errorf("failed to query auth table: %v", err)
 	}
 
 	var token string
 	for selDB.Next() {
 		err = selDB.Scan(&token)
 		if err != nil {
-			return fmt.Errorf("Failed to scan auth table: %v", err)
+			return fmt.Errorf("failed to scan auth table: %v", err)
 		}
 	}
 
 	sDnc, err := base64.StdEncoding.DecodeString(token)
 	if err != nil {
-		return fmt.Errorf("Failed to decode token: %v", err)
+		return fmt.Errorf("failed to decode token: %v", err)
 	}
 
 	auth := string(sDnc)
@@ -102,7 +112,7 @@ func (a *AdminUser) Verify() error {
 	// compare the password
 	err = bcrypt.CompareHashAndPassword([]byte(pw), []byte(a.Password))
 	if err != nil {
-		return fmt.Errorf("Failed to compare password: %v", err)
+		return fmt.Errorf("failed to compare password: %v", err)
 	}
 
 	return nil

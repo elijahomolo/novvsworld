@@ -3,7 +3,6 @@ package app
 import (
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"path"
 )
@@ -17,24 +16,61 @@ type Entry struct {
 	createdOn []uint8
 }
 
+func executeTemplate(templatePath string, templateName string, w http.ResponseWriter, data interface{}) error {
+
+	fp := path.Join(templatePath, templateName)
+	lp := path.Join(templatePath, "layout.html")
+	t, err := template.ParseFiles(fp, lp)
+	if err != nil {
+		return err
+
+	}
+
+	if err := t.ExecuteTemplate(w, "layout", &data); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return err
+	}
+
+	return nil
+}
+
 func HomePage(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
 	err := executeTemplate("templates", "index.html", w, nil)
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
-func CommisionsPage(w http.ResponseWriter, r *http.Request) {
+type PageData struct {
+	Title       string
+	Commissions []Commission
+}
+
+func CommissionsPage(w http.ResponseWriter, r *http.Request) {
 
 	commission := &Commission{}
-
 	commissions, err := commission.GetAll()
+
+	data := PageData{
+		Title: "Commissions",
+	}
+
+	if len(commissions) > 0 {
+		data.Commissions = commissions
+	} else {
+		data.Commissions = []Commission{}
+	}
+
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to list commissions: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	err = executeTemplate("templates", "commissions.html", w, commissions)
+	err = executeTemplate("templates", "results.html", w, data)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to list commissions: %v", err), http.StatusInternalServerError)
 		return
@@ -138,17 +174,3 @@ func CommisionsPage(w http.ResponseWriter, r *http.Request) {
 //	//execute the template
 //	executeTemplate("templates/signup", "results.html", w, entries)
 //}
-
-func executeTemplate(templatePath string, templateName string, w http.ResponseWriter, data interface{}) error {
-	fp := path.Join(templatePath, templateName)
-	tmpl, err := template.ParseFiles(fp)
-	if err != nil {
-		return err
-	}
-
-	if err := tmpl.Execute(w, data); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
-	return nil
-}

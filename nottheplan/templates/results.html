@@ -1,0 +1,26 @@
+{{define "title"}} Results {{end}}
+
+
+{{define "body"}}
+    <h2>{{.Title}}</h2>
+{{range .Commissions}}
+
+
+
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Location</th>
+        </tr>
+        <tr>
+            <td>{{.Name}}</td>
+            <td>{{.Description}}</td>
+            <td>{{.Location}}</td>
+        </tr>
+    </table>
+
+    {{ end}}
+{{end}}
+

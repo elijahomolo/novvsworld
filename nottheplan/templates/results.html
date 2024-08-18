@@ -4,10 +4,6 @@
 {{define "body"}}
     <h2>{{.Title}}</h2>
 {{range .Commissions}}
-
-
-
-
     <table>
         <tr>
             <th>Name</th>
@@ -18,6 +14,12 @@
             <td>{{.Name}}</td>
             <td>{{.Description}}</td>
             <td>{{.Location}}</td>
+            <td>
+                <form action="/commissions/entry" method="get">
+                    <input type="hidden" name="id" value="{{.ID}}">
+                <button type="submit">Submit Entry</button>
+                </form>
+            </td>
         </tr>
     </table>
 

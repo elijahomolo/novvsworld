@@ -28,8 +28,9 @@ func AdminLogin(w http.ResponseWriter, r *http.Request) {
 		tmpl.Execute(w, nil)
 		return
 	}
-
-	err = createSession(w, credentials.Username)
+	auth.Writer = w
+	auth.Username = credentials.Username
+	auth.createSession()
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Failed to create session: %v", err), http.StatusInternalServerError)
 		tmpl.Execute(w, nil)
@@ -125,6 +126,32 @@ func ListCommissions(w http.ResponseWriter, r *http.Request) {
 	err = tmpl.Execute(w, commissions)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to execute template: %v", err), http.StatusInternalServerError)
+	}
+}
+
+func DeleteCommission(w http.ResponseWriter, r *http.Request) {
+	validateSession(w, r)
+
+	commission := &Commission{
+		ID: 1,
+	}
+
+	err := commission.Delete()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to delete commission: %v", err), http.StatusInternalServerError)
+	}
+}
+
+func UpdateCommission(w http.ResponseWriter, r *http.Request) {
+	validateSession(w, r)
+
+	commission := &Commission{
+		ID: 1,
+	}
+
+	err := commission.Update()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to update commission: %v", err), http.StatusInternalServerError)
 	}
 }
 

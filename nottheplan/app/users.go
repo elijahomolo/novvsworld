@@ -20,7 +20,7 @@ type Member struct {
 	Country   string
 }
 
-func VerifyUser(credentials Member) error {
+func (m *Member) VerifyUser(credentials Member) error {
 
 	db := DB{}
 	err := db.init()
@@ -29,21 +29,14 @@ func VerifyUser(credentials Member) error {
 	}
 
 	// check if the credentials are correct
+	m.Username = credentials.Username
 
-	selDB, err := db.Database.Query("SELECT id FROM members WHERE username = ?", credentials.Username)
+	err = m.getUserID()
 	if err != nil {
-		return fmt.Errorf("Failed to query members table: %v", err)
+		return fmt.Errorf("Failed to get user id: %v", err)
 	}
 
-	var id int
-	for selDB.Next() {
-		err = selDB.Scan(&id)
-		if err != nil {
-			return fmt.Errorf("Failed to scan members table: %v", err)
-		}
-	}
-
-	selDB, err = db.Database.Query("SELECT token FROM auth WHERE id = ?", id)
+	selDB, err := db.Database.Query("SELECT token FROM auth WHERE id = ?", m.ID)
 	if err != nil {
 		return fmt.Errorf("Failed to query auth table: %v", err)
 	}
@@ -70,6 +63,30 @@ func VerifyUser(credentials Member) error {
 		return fmt.Errorf("Failed to compare password: %v", err)
 	}
 
+	return nil
+}
+
+func (m *Member) getUserID() error {
+	db := DB{}
+	err := db.init()
+	if err != nil {
+		return fmt.Errorf("Failed to initialize database: %v", err)
+	}
+
+	selDB, err := db.Database.Query("SELECT id FROM members WHERE username = ?", m.Username)
+	if err != nil {
+		return fmt.Errorf("Failed to query members table: %v", err)
+	}
+
+	var id int
+	for selDB.Next() {
+		err = selDB.Scan(&id)
+		if err != nil {
+			return fmt.Errorf("Failed to scan members table: %v", err)
+		}
+	}
+
+	m.ID = id
 	return nil
 }
 

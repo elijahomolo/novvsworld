@@ -1,12 +1,13 @@
 package app
 
 import (
-	"fmt"
 	"github.com/golang-jwt/jwt/v5"
-	"html/template"
+	"log"
 	"net/http"
 	"time"
 )
+
+var auth Auth
 
 // Create the JWT key used to create the signature
 // create env variable for jwt key
@@ -27,10 +28,15 @@ type Claims struct {
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	//load the login page
-	tmpl := template.Must(template.ParseFiles("templates/login.html"))
-
 	if r.Method != http.MethodPost {
-		tmpl.Execute(w, nil)
+		pd := struct {
+			Success bool
+			Message string
+		}{
+			Success: false,
+			Message: "Please log in",
+		}
+		executeTemplate("templates", "login.html", w, pd)
 		return
 	}
 
@@ -39,110 +45,69 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Password: r.FormValue("password"),
 	}
 
-	err := VerifyUser(credentials)
+	err := credentials.VerifyUser(credentials)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to verify user: %v", err), http.StatusInternalServerError)
-		tmpl.Execute(w, nil)
-		return
+		log.Printf("Failed to verify user: %v", err)
+		errorPage(w, http.StatusInternalServerError)
 	}
 
-	err = createSession(w, credentials.Username)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to create session: %v", err), http.StatusInternalServerError)
-		tmpl.Execute(w, nil)
-		return
+	auth.Username = credentials.Username
+	auth.Writer = w
+
+	auth.createSession()
+
+	pd := struct {
+		Success bool
+		Message string
+	}{
+		Success: true,
+		Message: "You have been logged in",
 	}
 
-	err = tmpl.Execute(w, struct{ Success bool }{true})
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to execute template: %v", err), http.StatusInternalServerError)
-	}
+	executeTemplate("templates", "login.html", w, pd)
 }
 
-func createSession(w http.ResponseWriter, username string) error {
-	// create a user session
-	// Declare the expiration time of the token
-	// here, we have kept it as 5 minutes
-	expirationTime := time.Now().Add(10 * time.Minute)
-
-	// Create the JWT claims, which includes the username and expiry time
-	claims := &Claims{
-		Username: username,
-		RegisteredClaims: jwt.RegisteredClaims{
-			// In JWT, the expiry time is expressed as unix milliseconds
-			ExpiresAt: jwt.NewNumericDate(expirationTime),
-		},
-	}
-
-	// Declare the token with the algorithm used for signing, and the claims
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	// Create the JWT string
-	tokenString, err := token.SignedString(jwtKey)
-	if err != nil {
-		// If there is an error in creating the JWT return an internal server error
-		w.WriteHeader(http.StatusInternalServerError)
-		return err
-	}
-
-	// Finally, we set the client cookie for "token" as the JWT we just generated
-	// we also set an expiry time which is the same as the token itself
-	http.SetCookie(w, &http.Cookie{
-		Name:    "token",
-		Value:   tokenString,
-		Expires: expirationTime,
-	})
-
-	return nil
-}
+//func createSession(w http.ResponseWriter, username string) error {
+//	// create a user session
+//	// Declare the expiration time of the token
+//	// here, we have kept it as 5 minutes
+//	expirationTime := time.Now().Add(10 * time.Minute)
+//
+//	// Create the JWT claims, which includes the username and expiry time
+//	claims := &Claims{
+//		Username: username,
+//		RegisteredClaims: jwt.RegisteredClaims{
+//			// In JWT, the expiry time is expressed as unix milliseconds
+//			ExpiresAt: jwt.NewNumericDate(expirationTime),
+//		},
+//	}
+//
+//	// Declare the token with the algorithm used for signing, and the claims
+//	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+//	// Create the JWT string
+//	tokenString, err := token.SignedString(jwtKey)
+//	if err != nil {
+//		// If there is an error in creating the JWT return an internal server error
+//		w.WriteHeader(http.StatusInternalServerError)
+//		return err
+//	}
+//
+//	// Finally, we set the client cookie for "token" as the JWT we just generated
+//	// we also set an expiry time which is the same as the token itself
+//	http.SetCookie(w, &http.Cookie{
+//		Name:    "token",
+//		Value:   tokenString,
+//		Expires: expirationTime,
+//	})
+//
+//	return nil
+//}
 
 func Welcome(w http.ResponseWriter, r *http.Request) {
 	//tmpl := template.Must(template.ParseFiles("templates/welcome.html"))
-	// We can obtain the session token from the requests cookies, which come with every request
-	c, err := r.Cookie("token")
-	if err != nil {
-		if err == http.ErrNoCookie {
-			// If the cookie is not set, return an unauthorized status
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-		// For any other type of error, return a bad request status
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
+	auth.ValidateToken(w, r)
 
-	// Get the JWT string from the cookie
-	tknStr := c.Value
-
-	// Initialize a new instance of `Claims`
-	claims := &Claims{}
-
-	// Parse the JWT string and store the result in `claims`.
-	// Note that we are passing the key in this method as well. This method will return an error
-	// if the token is invalid (if it has expired according to the expiry time we set on sign in),
-	// or if the signature does not match
-	tkn, err := jwt.ParseWithClaims(tknStr, claims, func(token *jwt.Token) (any, error) {
-		return jwtKey, nil
-	})
-	if err != nil {
-		if err == jwt.ErrSignatureInvalid {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	if !tkn.Valid {
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-	// Finally, return the welcome message to the user, along with their
-	// username given in the token
-	//write, err := w.Write([]byte(fmt.Sprintf("Welcome %s!", claims.Username)))
-	if err != nil {
-		return
-	}
-
-	err = executeTemplate("templates", "welcome.html", w, claims.Username)
+	executeTemplate("templates", "welcome.html", w, &auth.Username)
 }
 
 func Refresh(w http.ResponseWriter, r *http.Request) {

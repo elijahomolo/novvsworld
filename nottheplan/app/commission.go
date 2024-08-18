@@ -36,7 +36,7 @@ func (c *Commission) Create() error {
 
 	}
 
-	err = db.execute(stmt, c.Name, c.Description, c.Budget, c.Currency, c.Location, c.Deadline, c.Status, c.Winner, fmt.Sprintf("%v", c.Entries))
+	_, err = db.execute(stmt, c.Name, c.Description, c.Budget, c.Currency, c.Location, c.Deadline, c.Status, c.Winner, fmt.Sprintf("%v", c.Entries))
 	if err != nil {
 		return fmt.Errorf("failed to execute commission insert statement: %v", err)
 	}
@@ -61,7 +61,7 @@ func (c *Commission) Update() error {
 		return fmt.Errorf("failed to prepare commission update statement: %v", err)
 	}
 
-	err = db.execute(stmt, c.Name, c.Description, c.Budget, c.Currency, c.Location, c.Deadline, c.Status, c.Winner, fmt.Sprintf("%v", c.Entries), c.ID)
+	_, err = db.execute(stmt, c.Name, c.Description, c.Budget, c.Currency, c.Location, c.Deadline, c.Status, c.Winner, fmt.Sprintf("%v", c.Entries), c.ID)
 	if err != nil {
 		return fmt.Errorf("failed to execute commission update statement: %v", err)
 	}
@@ -86,7 +86,7 @@ func (c *Commission) Delete() error {
 		return fmt.Errorf("failed to prepare commission delete statement: %v", err)
 	}
 
-	err = db.execute(stmt, c.ID)
+	_, err = db.execute(stmt, c.ID)
 	if err != nil {
 		return fmt.Errorf("failed to execute commission delete statement: %v", err)
 	}

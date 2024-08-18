@@ -1,7 +1,9 @@
-<!-- forms.html -->
+{{define "title"}} {{.Title}} {{end}}
+{{define "body"}}
+
 {{if .Success}}
-<h1>Create Account</h1>
 <p>Login Successfull</p>
+    <h1>{{.Message}}</h1>
 {{else}}
 <h1>Contact</h1>
 <form method="POST">
@@ -11,4 +13,5 @@
     <input type="text" name="password" required><br/>
     <input type="submit">
 </form>
+{{end}}
 {{end}}

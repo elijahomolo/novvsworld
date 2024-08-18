@@ -63,7 +63,7 @@ func (d *DB) close() error {
 	defer func(Database *sql.DB) {
 		err := Database.Close()
 		if err != nil {
-			log.Fatalf("Failed to close database: %v", err)
+			log.Printf("Failed to close database: %v", err)
 		}
 	}(d.Database)
 	return nil
@@ -72,21 +72,18 @@ func (d *DB) close() error {
 
 func (d *DB) prepare(query string) (*sql.Stmt, error) {
 	stmt, err := d.Database.Prepare(query)
-	log.Printf("preparing statement: %v", stmt)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to prepare statement: %v", err)
+		return nil, fmt.Errorf("failed to prepare statement: %v", err)
 	}
 
 	return stmt, nil
 }
 
-func (d *DB) execute(stmt *sql.Stmt, args ...interface{}) error {
+func (d *DB) execute(stmt *sql.Stmt, args ...interface{}) (sql.Result, error) {
 	result, err := stmt.Exec(args...)
 	if err != nil {
-		return fmt.Errorf("Failed to execute statement: %v", err)
+		return nil, fmt.Errorf("failed to execute statement: %v", err)
 	}
 
-	log.Print(result)
-
-	return nil
+	return result, nil
 }

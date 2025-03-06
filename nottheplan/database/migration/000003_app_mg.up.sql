@@ -1,0 +1,1 @@
+ALTER TABLE commissions MODIFY COLUMN entries  VARCHAR(255);

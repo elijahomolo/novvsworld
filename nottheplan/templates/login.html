@@ -1,0 +1,17 @@
+{{define "title"}} {{.Title}} {{end}}
+{{define "body"}}
+
+{{if .Success}}
+<p>Login Successfull</p>
+    <h1>{{.Message}}</h1>
+{{else}}
+<h1>Contact</h1>
+<form method="POST">
+    <label>Username:</label><br/>
+    <input type="text" name="username" required><br/>
+    <label>Password:</label><br />
+    <input type="text" name="password" required><br/>
+    <input type="submit">
+</form>
+{{end}}
+{{end}}

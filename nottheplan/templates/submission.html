@@ -1,0 +1,33 @@
+{{define "title"}} {{.Title}} {{end}}
+{{define "body"}}
+
+    {{if .Success }}
+            <h1>{{.Message}}</h1>
+        {{else}}
+            <h1>Submit Entry</h1>
+        <p>{{.Message}}</p>
+
+
+    {{.User}}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Location</th>
+            </tr>
+            <tr>
+                <td>{{.CommissionName}}</td>
+                <td>{{.CommissionDesc}}</td>
+                <td>{{.CommissionLocation}}</td>
+            </tr>
+
+        </table>
+
+    <form method="post">
+        <label>
+            <input type="text" name="demo" value={{.CommissionID}}>
+        </label>
+        <button type="submit">Submit Entry</button>
+    </form>
+{{end}}
+{{end}}

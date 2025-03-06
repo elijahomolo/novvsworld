@@ -1,0 +1,17 @@
+{{define "title"}} TEST {{end}}
+
+{{define "body"}}
+<h1>{{.PageTitle}}</h1>
+<ul>
+    {{range .Todos}}
+        {{if .Done}}
+            <li>{{.Title}} &#10004</li>
+        {{else}}
+            <li>{{.Title}}</li>
+        {{end}}
+    {{end}}
+</ul>
+{{end}}
+
+
+
